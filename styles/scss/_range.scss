@@ -95,3 +95,8 @@ input[type=range]:focus::-ms-fill-lower {
 input[type=range]:focus::-ms-fill-upper {
   background: #367ebd;
 }
+@media (max-width:650px){
+  input[type=range]{
+  max-width: 300px;
+  }
+}

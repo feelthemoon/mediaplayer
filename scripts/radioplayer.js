@@ -12,8 +12,12 @@ export const radioPlayerInit = () => {
   audio.volume = radioVolumeRange.value / 100;
 
   radioStop.disabled = true;
-
-  const changeIconPlay = () => {
+  const reset = () => {
+    audio.pause();
+    toggleIcon();
+    radioItem.forEach((item) => item.classList.remove("select"));
+  };
+  const toggleIcon = () => {
     if (audio.paused) {
       radio.classList.remove("play");
       radioStop.classList.add("fa-play");
@@ -45,13 +49,13 @@ export const radioPlayerInit = () => {
       .play()
       .then((_) => {})
       .catch((e) => console.log(e));
-    changeIconPlay();
+    toggleIcon();
   });
 
   //Кнопка стоп/плей
   radioStop.addEventListener("click", () => {
     (audio.paused && audio.play()) || audio.pause();
-    changeIconPlay();
+    toggleIcon();
   });
 
   /*
@@ -60,4 +64,5 @@ export const radioPlayerInit = () => {
   radioVolumeRange.addEventListener("input", () => {
     audio.volume = radioVolumeRange.value / 100;
   });
+  return reset;
 };

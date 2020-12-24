@@ -6,9 +6,11 @@ export const radioPlayerInit = () => {
   const radioItem = document.querySelectorAll(".radio-item");
   const radioStop = document.querySelector(".radio-stop");
   const radioVolumeRange = document.querySelector(".radio__volume-range");
+
   const audio = new Audio();
   audio.type = "audio/aac";
   audio.volume = radioVolumeRange.value / 100;
+
   radioStop.disabled = true;
 
   const changeIconPlay = () => {
@@ -29,12 +31,14 @@ export const radioPlayerInit = () => {
         : item.classList.remove("select")
     );
   };
+
+  //Смена радио
   radioNavigation.addEventListener("change", (event) => {
     const target = event.target;
     const parrent = target.closest(".radio-item");
     selectItem(parrent);
     radioHeader.textContent = parrent.querySelector(".radio-name").textContent;
-    radioCover.src = parrent.querySelector('.radio-img').src;
+    radioCover.src = parrent.querySelector(".radio-img").src;
     radioStop.disabled = false;
     audio.src = target.dataset.radioStantion.toString();
     audio
@@ -43,11 +47,17 @@ export const radioPlayerInit = () => {
       .catch((e) => console.log(e));
     changeIconPlay();
   });
+
+  //Кнопка стоп/плей
   radioStop.addEventListener("click", () => {
     (audio.paused && audio.play()) || audio.pause();
     changeIconPlay();
   });
-  radioVolumeRange.addEventListener('input', ()=>{
+
+  /*
+   * Регулятор громкости
+   * */
+  radioVolumeRange.addEventListener("input", () => {
     audio.volume = radioVolumeRange.value / 100;
-  })
+  });
 };
